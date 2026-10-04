@@ -3,7 +3,6 @@ import { validateEnquiry } from '../src/validate-enquiry.mjs';
 
 const requests = new Map();
 
-
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
 
@@ -20,6 +19,7 @@ export default async function handler(req, res) {
     ENQUIRY_FROM,
     ENQUIRY_TO,
     SITE_URL,
+    NTFY_TOPIC,
   } = process.env;
 
   if (
@@ -67,10 +67,15 @@ export default async function handler(req, res) {
       ? JSON.parse(req.body)
       : req.body;
 
-    if (!data || typeof data !== 'object' ||
-        Array.isArray(data) ||
-        JSON.stringify(data).length > 12000) {
-      return res.status(413).json({ error: 'Invalid or oversized request.' });
+    if (
+      !data ||
+      typeof data !== 'object' ||
+      Array.isArray(data) ||
+      JSON.stringify(data).length > 12000
+    ) {
+      return res.status(413).json({
+        error: 'Invalid or oversized request.',
+      });
     }
   } catch {
     return res.status(400).json({ error: 'Invalid request.' });
@@ -126,7 +131,7 @@ export default async function handler(req, res) {
     message: data.message,
   };
 
-  // First save the enquiry in Supabase.
+  // Save enquiry first.
   try {
     const dbResponse = await fetch(
       `${supabaseUrl}/rest/v1/mdk_enquiries`,
@@ -161,7 +166,7 @@ export default async function handler(req, res) {
     });
   }
 
-  // Email is attempted after the enquiry is safely stored.
+  // Prepare notification details.
   const labels = {
     name: 'Name',
     organization: 'Organization',
@@ -183,6 +188,7 @@ export default async function handler(req, res) {
     )
     .join('\n\n');
 
+  // Send email notification.
   let emailDelivered = false;
 
   try {
@@ -208,16 +214,60 @@ export default async function handler(req, res) {
     emailDelivered = emailResponse.ok;
 
     if (!emailDelivered) {
-      console.error('MDK email notification failed:', emailResponse.status);
+      console.error(
+        'MDK email notification failed:',
+        emailResponse.status,
+        await emailResponse.text()
+      );
     }
   } catch (err) {
     console.error('MDK email request failed:', err);
+  }
+
+  // Send direct Android push notification using ntfy.
+  let pushDelivered = false;
+
+  if (NTFY_TOPIC) {
+    try {
+      const pushResponse = await fetch(
+        `https://ntfy.sh/${encodeURIComponent(NTFY_TOPIC)}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain; charset=utf-8',
+            Title: 'New MDK Enquiry',
+            Priority: 'high',
+            Tags: 'bell',
+          },
+          body:
+            `New consultation enquiry!\n\n` +
+            `Name: ${data.name}\n` +
+            `Organization: ${data.organization}\n` +
+            `Service: ${data.service}\n\n` +
+            `Check the MDK admin inbox for full details.`,
+          signal: AbortSignal.timeout(10000),
+        }
+      );
+
+      pushDelivered = pushResponse.ok;
+
+      if (!pushDelivered) {
+        console.error(
+          'MDK ntfy notification failed:',
+          pushResponse.status,
+          await pushResponse.text()
+        );
+      }
+    } catch (err) {
+      console.error('MDK ntfy request failed:', err);
+    }
   }
 
   return res.status(200).json({
     ok: true,
     saved: true,
     emailDelivered,
+    pushDelivered,
     smsDelivered: false,
   });
 }
