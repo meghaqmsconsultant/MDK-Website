@@ -406,7 +406,7 @@ export function Contact({compact=false}:{compact?:boolean}){
       }
 
     </form>
-  </section>
+  </section>}
 export function ServiceContent({service:s}:{service:Service}){
   return <>
     <p className="service-lede">{s.short}</p>
