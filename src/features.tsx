@@ -407,8 +407,113 @@ export function Contact({compact=false}:{compact?:boolean}){
 
     </form>
   </section>
-410 }
+export function ServiceContent({service:s}:{service:Service}){
+  return <>
+    <p className="service-lede">{s.short}</p>
 
-411 export function ServiceContent({service:s}:{service:Service}){return <><p className="service-lede">{s.short}</p><div className="service-detail-content"><div><p className="eyebrow">THE CHALLENGE</p><p>{s.challenge}</p></div><div><p className="eyebrow">WHAT MDK CAN HELP WITH</p><ul className="check-list">{s.help.map(h=><li key={h}><Check size={17}/>{h}</li>)}</ul></div><div><p className="eyebrow">APPROACH</p><p>{s.approach}</p></div><div><p className="eyebrow">POTENTIAL BUSINESS VALUE</p><p>{s.value}</p></div><div><p className="eyebrow">RELATED TRAINING</p><a className="text-link" href="/training">{s.training}<ArrowUpRight size={17}/></a></div></div><a className="button" href={'/contact?topic='+encodeURIComponent(s.title)}>Discuss this service<ArrowUpRight size={18}/></a></>}
+    <div className="service-detail-content">
+      <div>
+        <p className="eyebrow">THE CHALLENGE</p>
+        <p>{s.challenge}</p>
+      </div>
 
-412 export function Legal({kind}:{kind:string}){const title=kind==='privacy'?'Privacy notice':kind==='terms'?'Terms of website use':'Website disclaimer';return <><PageHero ...
+      <div>
+        <p className="eyebrow">WHAT MDK CAN HELP WITH</p>
+        <ul className="check-list">
+          {s.help.map(h=><li key={h}><Check size={17}/>{h}</li>)}
+        </ul>
+      </div>
+
+      <div>
+        <p className="eyebrow">APPROACH</p>
+        <p>{s.approach}</p>
+      </div>
+
+      <div>
+        <p className="eyebrow">POTENTIAL BUSINESS VALUE</p>
+        <p>{s.value}</p>
+      </div>
+
+      <div>
+        <p className="eyebrow">RELATED TRAINING</p>
+        <a className="text-link" href="/training">
+          {s.training}
+          <ArrowUpRight size={17}/>
+        </a>
+      </div>
+    </div>
+
+    <a className="button" href={'/contact?topic='+encodeURIComponent(s.title)}>
+      Discuss this service
+      <ArrowUpRight size={18}/>
+    </a>
+  </>
+}
+
+export function Legal({kind}:{kind:string}){
+  const title=
+    kind==='privacy'
+      ?'Privacy notice'
+      :kind==='terms'
+        ?'Terms of website use'
+        :'Website disclaimer';
+
+  return (
+    <>
+      <PageHero
+        label="WEBSITE INFORMATION"
+        title={title}
+        copy="A clear explanation of how to use this website and its information."
+      />
+
+      <section className="section legal">
+        {kind==='privacy'?(
+          <>
+            <h2>Your information</h2>
+            <p>When you submit an enquiry, your details are sent to MDK by its email delivery provider and an abbreviated notification is sent by SMS. Assessment answers remain in page memory and clear when you leave or reload. Theme preference is stored in your browser.</p>
+
+            <h2>Enquiries</h2>
+            <p>MDK uses your name, business contact details, organization, preferences and message to review and respond to your request. Form submissions may be stored in a secured business enquiry inbox and routed through the hosting provider, an email delivery service and an SMS provider. Do not send confidential or sensitive documents. Contact MDK by email for questions about your information.</p>
+
+            <h2>External services</h2>
+            <p>LinkedIn opens an external service with its own privacy practices. Web-hosting providers may process basic request logs. Fonts are served locally by this project. This website includes no analytics or advertising tracking by default.</p>
+
+            <h2>Contact and updates</h2>
+            <p>Contact MDK at Megha.QMS.Consultant@gmail.com for privacy questions. Material changes to data practices should be reflected here.</p>
+          </>
+        ):kind==='terms'?(
+          <>
+            <h2>Using this website</h2>
+            <p>Use this website for lawful purposes. Do not attempt to disrupt its operation, access restricted systems or submit misleading, harmful or confidential information.</p>
+
+            <h2>Information and consulting engagements</h2>
+            <p>Website content is general information. It is not a tailored assessment, formal audit, certification decision or binding professional advice. Consulting scope, deliverables, fees, responsibilities and timelines require a separate written agreement.</p>
+
+            <h2>Intellectual property</h2>
+            <p>Rights in website content remain with their respective owners. No right to reuse third-party names, marks or feedback is implied. Confirm ownership and permitted reuse of all assets before public launch.</p>
+
+            <h2>External links</h2>
+            <p>Links may lead to websites operated independently. Their availability, content and practices are outside the scope of this website.</p>
+
+            <h2>Limitations and governing terms</h2>
+            <p>No audit result, regulatory approval or certification is guaranteed. Any limitation of liability, governing law and dispute-resolution provisions require professional review and inclusion in the final business terms; no blanket waiver is asserted by this draft.</p>
+          </>
+        ):(
+          <>
+            <h2>General information</h2>
+            <p>Information provided on this website is intended for general educational and consulting purposes. It should not be interpreted as a guarantee of certification, regulatory approval or audit outcome.</p>
+
+            <h2>Illustrative tools</h2>
+            <p>The quality maturity self-assessment and roadmap are educational illustrations. Scores are self-reported and use illustrative thresholds. They are not validated measures of compliance or substitutes for a formal audit, regulatory assessment or professional review.</p>
+
+            <h2>Experience and feedback</h2>
+            <p>Career history is based on the supplied professional profile. Employers are not represented as MDK clients or endorsers. Professional feedback refers to Megha’s work and does not establish a consulting-client relationship with MDK.</p>
+
+            <h2>Training and guidelines</h2>
+            <p>Training topic names describe proposed learning areas. They do not imply accreditation or the award of a third-party certificate. Applicable requirements and course versions must be confirmed for each engagement.</p>
+          </>
+        )}
+      </section>
+    </>
+  );
+}
