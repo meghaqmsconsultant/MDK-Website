@@ -144,17 +144,28 @@ export function Contact({compact=false}:{compact?:boolean}){
       return;
     }
 
-    const script=document.createElement('script');
-    script.src='https://www.google.com/recaptcha/api.js?render=explicit';
-    script.async=true;
-    script.defer=true;
-    script.onload=renderCaptcha;
-    script.onerror=()=>{
-      setStatus('CAPTCHA could not be loaded. Please refresh and try again.');
-    };
+    const callbackName='mdkRecaptchaReady';
 
-    document.head.appendChild(script);
+(window as typeof window & {
+  [key:string]:()=>void;
+})[callbackName]=renderCaptcha;
 
+const script=document.createElement('script');
+script.src=`https://www.google.com/recaptcha/api.js?onload=${callbackName}&render=explicit`;
+script.async=true;
+script.defer=true;
+script.onerror=()=>{
+  setStatus('CAPTCHA could not be loaded. Please refresh and try again.');
+};
+
+document.head.appendChild(script);
+
+return()=>{
+  script.remove();
+  delete (window as typeof window & {
+    [key:string]:()=>void;
+  })[callbackName];
+};
     return()=>{
       script.remove();
     };
