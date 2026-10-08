@@ -4,6 +4,7 @@ export const business = {
  linkedin:'https://www.linkedin.com/in/megha-kandalkar-082a531b7/',
  email:'Megha.QMS.Consultant@gmail.com', phone:'9867372402', phoneSecondary:'9892608402', gstin:'27AGTPS3018D1Z8', whatsapp:'', location:'Mumbai, India',
 };
+
 export const services = [
  {slug:'qms-consulting',title:'Quality Management Systems',short:'Connect your processes. Give quality a clear structure.',icon:'Network',tag:'SYSTEMS',challenge:'Quality processes can become isolated, making responsibilities and follow-up difficult to track.',help:['Map existing quality processes and ownership','Identify gaps against applicable requirements','Connect documentation, actions and review mechanisms'],approach:'Start with your operating context, review available evidence and agree on a prioritized improvement plan.',value:'A more coherent system, clearer accountability and better visibility of quality actions.',training:'ISO 9001 Guidelines'},
  {slug:'regulatory-compliance',title:'Regulatory Compliance',short:'Translate applicable requirements into practical actions.',icon:'ShieldCheck',tag:'COMPLIANCE',challenge:'Teams need a clear understanding of the requirements relevant to their products and operations.',help:['Review alignment with applicable guidelines','Identify and prioritize compliance gaps','Translate findings into practical improvement actions'],approach:'Agree on the relevant scope, assess current practices and work through gaps using a risk-based approach.',value:'More informed decisions and a clearer route toward stronger compliance.',training:'Good Manufacturing Practices'},
@@ -17,7 +18,9 @@ export const services = [
  {slug:'change-control',title:'Change Control Management',short:'Make changes visible, considered and controlled.',icon:'GitBranch',tag:'IMPROVEMENT',challenge:'Changes made without clear assessment or communication can introduce avoidable quality risks.',help:['Build understanding of controlled change','Discuss impact assessment and responsibilities','Strengthen documentation and follow-up practices'],approach:'Review how changes are proposed, assessed, communicated and checked in your context.',value:'Clearer change decisions and better traceability of implementation.',training:'Change Control Management'},
  {slug:'digital-monitoring',title:'Digital Monitoring & Trending',short:'Use quality information to identify the next useful action.',icon:'ChartNoAxesCombined',tag:'IMPROVEMENT',challenge:'Quality information can remain fragmented without a shared way to review trends and follow up.',help:['Identify useful measures and review routines','Connect process information across teams','Develop actions from observed trends'],approach:'Start with the information available and establish a practical monitoring and review approach.',value:'Better visibility of trends and a stronger basis for continuous improvement.',training:'Digital Monitoring & Trending'},
 ];
+
 export type Service = typeof services[number];
+
 export const training = [
  ['Artwork Management','DOCUMENTATION','Packaging, artwork and quality teams','Understand artwork controls and review responsibilities.'],
  ['Mix-up Prevention','RISK','Manufacturing, packaging and quality teams','Recognize situations that can lead to mix-ups and discuss preventive controls.'],
@@ -33,6 +36,7 @@ export const training = [
  ['Digital Monitoring & Trending','QUALITY SYSTEMS','Quality leaders and process owners','Use structured quality information to review trends and plan action.'],
  ['Internal Auditor Development','AUDITING','Internal auditors and quality professionals','Build evidence-based audit skills and a clear understanding of CAPA follow-up.'],
 ].map(([title,category,audience,focus])=>({title,category,audience,focus}));
+
 export const industries = [
  ['Pharmaceutical','GMP, documentation and investigation practices.','audit-readiness'],
  ['FMCG','Consistent quality across products, operations and suppliers.','qms-consulting'],
@@ -41,17 +45,19 @@ export const industries = [
  ['Food','Food-safety awareness, documentation and staff capability.','capability-building'],
  ['Fiber & Nonwoven','Supplier oversight, process controls and quality consistency.','supplier-quality'],
 ].map(([title,challenge,service])=>({title,challenge,service}));
+
 export const timeline = [
  {company:'Kenvue',role:'Supplier Quality Lead, India',dates:'Jan 2023 – Sept 2026',detail:'Supplier quality governance, proactive risk management and preventive quality initiatives. Experience includes foreign matter prevention, data integrity, pest control and mix-up prevention.'},
  {company:'Johnson & Johnson',role:'Manager',dates:'Sep 1997 – Jan 2023',detail:'More than 25 years in Consumer Division quality management, with regional and global quality-team exposure. Her professional summary describes experience across manufacturing, commercial quality and supply-chain quality, connecting quality-system practice with the teams and processes behind it.'},
  {company:'FDC Limited',role:'Quality & Compliance – Officer',dates:'Sep 1995 – Aug 1997',detail:'Worked with controlled documentation, record traceability and SOP management. Contributed to technical and GMP training, supporting consistent use of quality procedures and records.'},
  {company:'Rallis India Ltd',role:'Quality & Compliance – Trainee',dates:'Sep 1993 – Aug 1995',detail:'Supported qualification of raw and packaging materials and the availability of materials meeting quality requirements, establishing an early foundation in material controls and supplier quality.'},
 ];
+
 export const testimonials = [
- {"name": "Hemant Das", "org": "Ecoplast Ltd.", "quote": "She has a strong understanding of auditing and takes the time to understand our processes and limitations.", "theme": "Practical auditing", "initials": "HD"},
+ {"name": "Hemanta Das", "org": "Ecoplast Ltd.", "quote": "Megha Kandalkar's key strengths as an auditor include her strong technical knowledge of audit processes, her ability to quickly understand our organization's specific workflows and limitations, and her attention to detail. She also has a good grasp of our product and industry expertise, which allows her to conduct audits that are practical and relevant to our actual operations rather than generic checklist reviews.", "theme": "Practical auditing", "initials": "HD"},
  {"name": "Prasad Upasani", "org": "Parakh Agro Industries Ltd", "quote": "Team learned the CAPA in much effective way from you.", "theme": "CAPA & learning", "initials": "PU"},
- {"name": "Ashok Kumar Das", "org": "Parakh Agro Industries Ltd", "quote": "Always trying to avoid issues. Problem solving skill is excellent.", "theme": "Problem solving", "initials": "AK"},
- {"name": "Saswata Ray", "org": "ALPLA India", "quote": "Verification of CAPA and closure of the issues", "theme": "Evidence & follow-up", "initials": "SR"},
+ {"name": "Ashok Kumar Das", "org": "Parakh Agro Industries Ltd", "quote": "She is very proactive and listens to others. She effectively bridges the perspectives of both suppliers and customers, always strives to prevent issues, and demonstrates excellent problem-solving skills.", "theme": "Problem solving", "initials": "AK"},
+ {"name": "Saswata Ray", "org": "ALPLA India", "quote": "Planning, evidence-based and unbiased approach, clearly defined outputs, and verification of CAPA and closure of issues.", "theme": "Evidence & follow-up", "initials": "SR"},
  {"name": "Shahurao Arun Bondre", "org": "Parakh Agro Industries Ltd.", "quote": "Data Integrity and Learning, Teaching through Training", "theme": "Data integrity & training", "initials": "SA"},
  {"name": "Vinay Kanchan", "org": "JK Paper Ltd", "quote": "Strict Auditor and always available to Provide us support and guidance to resolve the issue", "theme": "Guidance", "initials": "VK"},
  {"name": "V. Balachandar", "org": "JK Papers Ltd", "quote": "Her observation point was very useful to improve our Quality system", "theme": "Quality systems", "initials": "VB"},
@@ -60,7 +66,7 @@ export const testimonials = [
  {"name": "Suresh N.", "org": "JK Paper Limited, Tindivanam", "quote": "Her guidance and observation gives motivation to us.", "theme": "Guidance", "initials": "SN"},
  {"name": "Dhananjay Paliwal", "org": "JK Paper Limited", "quote": "Very Clear communication that what their organisation want from the supplier and very specific in quality.", "theme": "Communication", "initials": "DP"},
  {"name": "Vivek Sogi", "org": "JK Paper Ltd, Horizon Packs Bangalore", "quote": "She supported us in all the possible manner and helped to resolve the issues very effectively.", "theme": "Problem solving", "initials": "VS"},
- {"name": "Nimisha Patel", "org": "Spoton Coatings Private Limited", "quote": "Unbiased and impartial decision-making", "theme": "Impartial auditing", "initials": "NP"},
+ {"name": "Nimisha Patel", "org": "Spoton Coatings Private Limited", "quote": "Unbiased and impartial decision-making, strong technical knowledge, good observation and attention to detail, problem-solving and risk-based thinking, clear communication, constructive feedback, and focus on continuous improvement.", "theme": "Impartial auditing", "initials": "NP"},
  {"name": "J. P. Suryawanshi", "org": "Baramati Agro Ltd", "quote": "Deep knowledge of system. Understanding barmati agro team and very supportive approch", "theme": "System knowledge", "initials": "JP"},
  {"name": "Tapomay Saha", "org": "Natural Foodchains", "quote": "Excellent follow up with customer/ auditee, very good knowledge base", "theme": "Follow-up", "initials": "TS"},
  {"name": "Vishal Swaika", "org": "Natural Foodchains", "quote": "Strong attention to detail. Sound knowledge of quality and regulatory compliance. Clear communication.", "theme": "Attention to detail", "initials": "VS"},
@@ -78,6 +84,7 @@ export const testimonials = [
  {"name": "Sushank Srivastava", "org": "SNK Flex Pvt Ltd", "quote": "Her professional approach and valuable feedback have contributed positively to process discipline, continuous improvement, and maintaining a stronger quality culture within organization.", "theme": "Process discipline", "initials": "SS"},
  {"name": "Satish Sharma", "org": "KCL Limited", "quote": "Positive. Good Depth Knowledge of any topic she is presenting , Guidance and Implementation", "theme": "Guidance", "initials": "SS"},
 ];
+
 export const roadmap = [
  ['Understand','Establish context','Discuss products, processes and current priorities.','Agreed review scope'],
  ['Assess','Review the current system','Examine relevant practices and available evidence.','Current-state observations'],
@@ -91,6 +98,7 @@ export const roadmap = [
  ['Monitor','Watch for signals','Review quality information and trends.','Monitoring observations'],
  ['Improve','Continue the cycle','Use learning to refine priorities and practices.','Next improvement priorities'],
 ].map(([title,objective,activities,output])=>({title,objective,activities,output}));
+
 export const questions = [
  ['Documentation','Are current, approved procedures available and consistently used?','documentation'],
  ['Data Integrity','Are records complete, accurate and traceable throughout their lifecycle?','data-integrity'],
@@ -103,6 +111,7 @@ export const questions = [
  ['Traceability','Can relevant materials, activities and quality records be traced?','documentation'],
  ['Continuous Improvement','Are trends reviewed and used to guide improvement actions?','digital-monitoring'],
 ].map(([area,question,service])=>({area,question,service}));
+
 export const faqs = [
  ['What is a Quality Management System?','A QMS connects the processes, responsibilities, documentation and review activities an organization uses to manage quality. It helps teams work consistently and learn from issues.'],
  ['What does a QMS consultant do?','A consultant helps you understand current practices, identify gaps, prioritize improvements and build staff capability. The exact scope depends on your products, processes and needs.'],
@@ -117,4 +126,5 @@ export const faqs = [
  ['Which industries are reflected in the experience?','The supplied material covers Pharma, FMCG, API, chemicals, packaging, food-related quality topics and fiber/nonwoven. Discuss your specific context to establish fit.'],
  ['How does a consulting engagement begin?','Begin with a conversation about the issue, your operating context and the support required. Scope, deliverables, timing and commercial terms are agreed separately.'],
 ];
+
 export const routes = ['/','/about','/services',...services.map(s=>'/services/'+s.slug),'/industries','/roadmap','/training','/testimonials','/assessment','/insights','/contact','/admin','/privacy','/terms','/disclaimer','/404'];
