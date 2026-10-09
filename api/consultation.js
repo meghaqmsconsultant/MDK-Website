@@ -46,11 +46,18 @@ export default async function handler(req, res) {
     });
   }
 
-  if (req.headers.origin !== origin) {
-    return res.status(403).json({
-      error: 'Request origin not allowed.',
-    });
-  }
+  const allowedOrigins = new Set([
+  origin,
+  'https://mdk-website-m053la670-mdk18.vercel.app',
+]);
+
+const requestOrigin = req.headers.origin;
+
+if (!requestOrigin || !allowedOrigins.has(requestOrigin)) {
+  return res.status(403).json({
+    error: 'Request origin not allowed.',
+  });
+}
 
   if (!req.headers['content-type']?.includes('application/json')) {
     return res.status(415).json({ error: 'JSON required.' });
