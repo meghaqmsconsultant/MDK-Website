@@ -88,98 +88,15 @@ export const FORMS_ENABLED = true;
 export function Contact({compact=false}:{compact?:boolean}){
   const [status,setStatus]=useState('');
   const [busy,setBusy]=useState(false);
-  const [captchaToken,setCaptchaToken]=useState('');
-  const [captchaReady,setCaptchaReady]=useState(false);
-  const captchaRef=useRef<HTMLDivElement>(null);
-  const captchaWidgetId=useRef<number|null>(null);
   const [started]=useState(Date.now);
 
-  useEffect(()=>{
-    const siteKey=import.meta.env.VITE_RECAPTCHA_SITE_KEY;
-
-    if(!siteKey){
-      setStatus('CAPTCHA is not configured yet. Please try again later.');
-      return;
-    }
-
-    const renderCaptcha=()=>{
-      const grecaptcha=(window as typeof window & {
-        grecaptcha?:{
-          render:(element:HTMLElement,options:{
-            sitekey:string;
-            callback:(token:string)=>void;
-            'expired-callback':()=>void;
-            'error-callback':()=>void;
-          })=>number;
-          reset:(widgetId?:number)=>void;
-        }
-      }).grecaptcha;
-
-      if(!grecaptcha||!captchaRef.current||captchaWidgetId.current!==null)return;
-
-      captchaWidgetId.current=grecaptcha.render(captchaRef.current,{
-        sitekey:siteKey,
-        callback:(token:string)=>{
-          setCaptchaToken(token);
-          setStatus('');
-        },
-        'expired-callback':()=>{
-          setCaptchaToken('');
-        },
-        'error-callback':()=>{
-          setCaptchaToken('');
-          setStatus('CAPTCHA could not be loaded. Please refresh and try again.');
-        }
-      });
-
-      setCaptchaReady(true);
-    };
-
-    const existingScript=document.querySelector(
-      'script[src^="https://www.google.com/recaptcha/api.js"]'
-    );
-
-    if(existingScript){
-      renderCaptcha();
-      return;
-    }
-
-    const callbackName='mdkRecaptchaReady';
-
-(window as typeof window & {
-  [key:string]:()=>void;
-})[callbackName]=renderCaptcha;
-
-const script=document.createElement('script');
-script.src=`https://www.google.com/recaptcha/api.js?onload=${callbackName}&render=explicit`;
-script.async=true;
-script.defer=true;
-script.onerror=()=>{
-  setStatus('CAPTCHA could not be loaded. Please refresh and try again.');
-};
-
-document.head.appendChild(script);
-
-return()=>{
-  script.remove();
-  delete (window as typeof window & {
-    [key:string]:()=>void;
-  })[callbackName];
-};
-    return()=>{
-      script.remove();
-    };
-  },[]);
+  
 
   async function submit(e:FormEvent<HTMLFormElement>){
     e.preventDefault();
     setStatus('');
 
-    if(!captchaToken){
-      setStatus('Please complete the "I’m not a robot" CAPTCHA.');
-      return;
-    }
-
+  
     const f=e.currentTarget;
     const data=Object.fromEntries(new FormData(f));
 
@@ -193,7 +110,7 @@ return()=>{
         },
         body:JSON.stringify({
           ...data,
-          captchaToken,
+         
           started
         })
       });
@@ -207,17 +124,7 @@ return()=>{
       );
 
       f.reset();
-      setCaptchaToken('');
-
-      const grecaptcha=(window as typeof window & {
-        grecaptcha?:{
-          reset:(widgetId?:number)=>void;
-        }
-      }).grecaptcha;
-
-      if(grecaptcha&&captchaWidgetId.current!==null){
-        grecaptcha.reset(captchaWidgetId.current);
-      }
+      
 
     }catch(e){
       setStatus(
@@ -364,19 +271,6 @@ return()=>{
           />
         </label>
 
-        <div className="wide captcha-container">
-          <div
-            ref={captchaRef}
-            aria-label="reCAPTCHA verification"
-          />
-
-          {!captchaReady&&
-            <p className="small muted">
-              Loading security verification…
-            </p>
-          }
-        </div>
-
       </div>
 
       <label className="consent">
@@ -395,7 +289,7 @@ return()=>{
 
       <button
         className="button form-submit"
-        disabled={busy||!captchaReady}
+        disabled={busy}
         type="submit"
       >
         {busy?'Sending…':'Send enquiry'}
