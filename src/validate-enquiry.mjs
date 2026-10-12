@@ -1,4 +1,3 @@
-```js
 export function validateEnquiry(data, now = Date.now()) {
   if (!data || typeof data !== 'object' || Array.isArray(data)) {
     return 'Invalid request.';
@@ -15,6 +14,7 @@ export function validateEnquiry(data, now = Date.now()) {
   const fields = {
     name: 100,
     organization: 160,
+    company: 160,
     designation: 100,
     email: 254,
     phone: 30,
@@ -36,14 +36,8 @@ export function validateEnquiry(data, now = Date.now()) {
     }
   }
 
-  for (const field of [
-    'name',
-    'organization',
-    'email',
-    'industry',
-    'service',
-    'message',
-  ]) {
+  // Required fields = the fields marked required in the live contact form.
+  for (const field of ['name', 'email', 'phone']) {
     if (!data[field]?.trim()) {
       return `Please complete ${field}.`;
     }
@@ -51,10 +45,6 @@ export function validateEnquiry(data, now = Date.now()) {
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
     return 'Please enter a valid email address.';
-  }
-
-  if (data.message.trim().length < 10) {
-    return 'Please provide at least 10 characters about your requirement.';
   }
 
   if (data.mode && !['Online', 'In-person'].includes(data.mode)) {
@@ -86,4 +76,3 @@ export function validateEnquiry(data, now = Date.now()) {
 
   return null;
 }
-```
