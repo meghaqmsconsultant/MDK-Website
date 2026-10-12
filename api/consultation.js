@@ -46,10 +46,15 @@ export default async function handler(req, res) {
     });
   }
 
+  // SITE_URL plus any extra origins listed in ALLOWED_ORIGINS (comma-separated).
   const allowedOrigins = new Set([
-  origin,
-  'https://mdk-website-m053la670-mdk18.vercel.app',
-]);
+    origin,
+    'https://mdk-website.vercel.app',
+    ...String(process.env.ALLOWED_ORIGINS || '')
+      .split(',')
+      .map((o) => o.trim())
+      .filter(Boolean),
+  ]);
 
 const requestOrigin = req.headers.origin;
 
@@ -125,17 +130,17 @@ if (!requestOrigin || !allowedOrigins.has(requestOrigin)) {
 
   const enquiry = {
     name: data.name,
-    organization: data.organization,
+    organization: data.organization || data.company || '',
     designation: data.designation || '',
     email: data.email,
     phone: data.phone || '',
-    industry: data.industry,
-    service: data.service,
+    industry: data.industry || '',
+    service: data.service || '',
     topic: data.topic || '',
     date: data.date || '',
     time: data.time || '',
     mode: data.mode || '',
-    message: data.message,
+    message: data.message || '',
   };
 
   // Save enquiry first.
@@ -191,7 +196,7 @@ if (!requestOrigin || !allowedOrigins.has(requestOrigin)) {
 
   const emailText = Object.entries(labels)
     .map(([key, label]) =>
-      `${label}: ${data[key] || 'Not provided'}`
+      `${label}: ${(key === 'organization' ? enquiry.organization : data[key]) || 'Not provided'}`
     )
     .join('\n\n');
 
