@@ -137,3 +137,93 @@ html{color:var(--ink);background:var(--bg)}body{isolation:isolate}.ambient-bg{po
     width: 125px;
   }
 }
+
+.diwali-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  overflow-y: auto;
+  background: rgb(15 20 25 / 72%);
+  backdrop-filter: blur(5px);
+}
+
+
+.diwali-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  background: rgb(0 0 0 / 82%);
+  overflow-y: auto;
+}
+
+.diwali-popup {
+  position: relative;
+  width: min(100%, 700px);
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  padding: 12px;
+  border-radius: 14px;
+  background: #fff;
+  text-align: center;
+}
+
+.diwali-poster-link {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.diwali-poster-link img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: calc(100dvh - 48px);
+  object-fit: contain;
+  object-position: center;
+}
+
+.diwali-close {
+  position: absolute;
+  z-index: 2;
+  top: 8px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+  color: #222;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
+}
+
+.diwali-popup h2,
+.diwali-popup p {
+  display: none;
+}
+
+.diwali-book-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+@media (max-width: 480px) {
+  .diwali-popup {
+    padding: 8px;
+  }
+
+  .diwali-poster-link img {
+    max-height: calc(100dvh - 100px);
+  }
+}

@@ -4,12 +4,13 @@ import {business,services,training,industries,timeline,testimonials,roadmap,ques
 import type {Service} from './data';
 import Admin from './Admin';
 import {PageHero,CTA,Challenges,About,Why,Roadmap,Industries,Training,Testimonials,AssessmentTeaser,Assessment,Insights,FAQ,Contact,Legal,ServiceContent,Modal,AuditTypes} from './features';
+import DiwaliPopup from './DiwaliPopup';
 
 const icons={ShieldCheck,Network,Database,SearchCheck,Files,ClipboardCheck,ScanSearch,Boxes,GraduationCap,GitBranch,ChartNoAxesCombined};
 export function Icon({name,size=25}:{name:string,size?:number}){const Component=icons[name as keyof typeof icons]||ShieldCheck;return <Component size={size} strokeWidth={1.4}/>}
 export function Button({href,children,onClick,secondary=false,className=''}:{href?:string,children:ReactNode,onClick?:()=>void,secondary?:boolean,className?:string}){const cls=`button ${secondary?'secondary':''} ${className}`;return href?<a className={cls} href={href}>{children}<ArrowUpRight size={17}/></a>:<button className={cls} onClick={onClick}>{children}<ArrowUpRight size={17}/></button>}
 function Header({path}:{path:string}){const [open,setOpen]=useState(false);const [dark,setDark]=useState(false);useEffect(()=>{setDark(document.documentElement.dataset.theme==='dark')},[]);function toggle(){const next=!dark;setDark(next);document.documentElement.dataset.theme=next?'dark':'light';try{localStorage.setItem('mdk-theme',next?'dark':'light')}catch{}}
-const nav=[['About','/about'],['Services','/services'],['Industries','/industries'],['QMS Roadmap','/roadmap'],['Training','/training'],['Insights','/insights']];
+const nav=[['Home', '/'],['About','/about'],['Services','/services'],['Industries','/industries'],['QMS Roadmap','/roadmap'],['Training','/training'],['Insights','/insights']];
 return <><a href="#main" className="skip">Skip to content</a><header className="header"><a className="brand" href="/" aria-label="MDK Global Consultant home">
   <img
     src="/mdk-logo.png"
@@ -56,5 +57,7 @@ else if(path==='/admin')content=<Admin/>;
 else if(path==='/contact')content=<><PageHero label="BOOK A CONSULTATION" title="Let’s talk about your quality priorities." copy="A focused conversation is the first step toward a useful scope of work."/><Contact/><FAQ/></>;
 else if(['/privacy','/terms','/disclaimer'].includes(path))content=<Legal kind={path.slice(1)}/>;
 else content=<section className="section not-found"><p className="eyebrow">404 / PAGE NOT FOUND</p><h1>Looks like this process<br/>went outside the QMS.</h1><p>The page you’re looking for may have moved or doesn’t exist.</p><Button href="/">Return home</Button></section>;
-return <><AmbientBackground/><div className="reading-progress" aria-hidden="true"/><Header path={path}/><main id="main">{content}</main><Footer/>{business.whatsapp&&<a className="whatsapp" href={'https://wa.me/'+business.whatsapp.replace(/\D/g,'')+'?text='+encodeURIComponent('Hello, I would like to enquire about MDK Quality Management System Consulting services.')} target="_blank" rel="noopener noreferrer">WhatsApp Business<ArrowUpRight size={15}/></a>}</>}
+
+return <><AmbientBackground/><div className="reading-progress" aria-hidden="true"/><Header path={path}/><main id="main">{content}</main><Footer/>{business.whatsapp&&<a className="whatsapp" href={'https://wa.me/'+business.whatsapp.replace(/\D/g,'')+'?text='+encodeURIComponent('Hello, I would like to enquire about MDK Quality Management System Consulting services.')} target="_blank" rel="noopener noreferrer">WhatsApp Business<ArrowUpRight size={15}/></a>}<DiwaliPopup /></>}
+
 
